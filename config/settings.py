@@ -3,6 +3,9 @@ from datetime import timedelta
 
 import environ
 from pathlib import Path
+
+from django.conf.global_settings import AUTH_USER_MODEL, AUTHENTICATION_BACKENDS
+
 root=environ.Path(__file__) - 2 # определение корня проекта
 env = environ.Env() # переменная которая будет хранить значения
 environ.Env.read_env(env.str(root(), '.env'))  # заполнение переменной данными из файла .env
@@ -24,6 +27,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
+    'breaks',
+    'users',
+    'phonenumber_field',
 ]
 
 # Packages
@@ -90,15 +96,15 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': env.str(var='PG_DATABASE', default='postgres'),
+    #     'USER': env.str(var='PG_USER', default='postgres'),
+    #     'PASSWORD': env.str(var='PG_PASSWORD', default='postgres'),
+    #     'HOST': env.str(var='DB_HOST', default='localhost'),
+    #     'PORT': env.int(var='DB_PORT', default=5432),
+    # },
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env.str(var='PG_DATABASE', default='postgres'),
-        'USER': env.str(var='PG_USER', default='postgres'),
-        'PASSWORD': env.str(var='PG_PASSWORD', default='postgres'),
-        'HOST': env.str(var='DB_HOST', default='localhost'),
-        'PORT': env.int(var='DB_PORT', default=5432),
-    },
-    'extra': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
@@ -222,3 +228,9 @@ DJOSER = {
     'SERIALIZERS': {},
 }
 # endregion -------------------------------------------------------------------------=========
+AUTH_USER_MODEL = 'users.User'
+
+
+AUTHENTICATION_BACKENDS = [
+    'users.backends.AuthBackend',
+]
