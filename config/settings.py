@@ -39,26 +39,7 @@ INSTALLED_APPS += [
     'corsheaders',
     'drf_spectacular',
 ]
-# region ---------------------- SPECTACULLAR  SETTINGS  --------------------------------------
-SPECTACULAR_SETTINGS = {
-    'TITLE': 'STREAMING PLATFORM',
-    'DESCRIPTION': 'Проект, который должен заменить YouTube и стать лучше него в СНГ',
-    'VERSION': '1.0.0',
-    'SERVE_PERMISSIONS': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
-    'SERVE_AUTHENTICATION': [
-        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-    ],
-    'SWAGGER_UI_SETTINGS': {
-        'DeepLinking': True,
-        'DisplayOperationId': True,
-    },
-    'COMPONENT_SPLIT_REQUEST': True,
-    'SORT_OPERATIONS': False,
-}
-# endregion -------------------------------------------------------------------
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -96,15 +77,15 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': env.str(var='PG_DATABASE', default='postgres'),
-    #     'USER': env.str(var='PG_USER', default='postgres'),
-    #     'PASSWORD': env.str(var='PG_PASSWORD', default='postgres'),
-    #     'HOST': env.str(var='DB_HOST', default='localhost'),
-    #     'PORT': env.int(var='DB_PORT', default=5432),
-    # },
     'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env.str(var='PG_DATABASE', default='postgres'),
+        'USER': env.str(var='PG_USER', default='postgres'),
+        'PASSWORD': env.str(var='PG_PASSWORD', default='postgres'),
+        'HOST': env.str(var='DB_HOST', default='localhost'),
+        'PORT': env.int(var='DB_PORT', default=5432),
+    },
+    'extra': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
@@ -163,7 +144,7 @@ REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
-        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
 
     ),
 
@@ -183,9 +164,9 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    "ROTATE_REFRESH_TOKENS": False,
-    "BLACKLIST_AFTER_ROTATION": False,
-    "UPDATE_LAST_LOGIN": False,
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "UPDATE_LAST_LOGIN": True,
 
     "ALGORITHM": "HS256",
     "SIGNING_KEY": SECRET_KEY,
@@ -209,7 +190,7 @@ SIMPLE_JWT = {
     "JTI_CLAIM": "jti",
 
     "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
-    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=1),
+    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=5),
 
     "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
@@ -227,10 +208,32 @@ DJOSER = {
     'SEND_ACTIVATION_EMAIL': False,
     'SERIALIZERS': {},
 }
-# endregion -------------------------------------------------------------------------=========
+# endregion -------------------------------------------------------------------------
 AUTH_USER_MODEL = 'users.User'
 
 
-AUTHENTICATION_BACKENDS = [
-    'users.backends.AuthBackend',
-]
+# AUTHENTICATION_BACKENDS = [
+#     'users.backends.AuthBackend',
+# ]
+
+# region ---------------------- SPECTACULAR  SETTINGS  --------------------------------------
+SPECTACULAR_SETTINGS = {
+    'TITLE': '',
+    'DESCRIPTION': '',
+    'VERSION': '1.0.0',
+    'SERVE_PERMISSIONS': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'SERVE_AUTHENTICATION': [
+        'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+
+    ],
+    'SWAGGER_UI_SETTINGS': {
+        'DeepLinking': True,
+        'DisplayOperationId': True,
+    },
+    'COMPONENT_SPLIT_REQUEST': True,
+    'SORT_OPERATIONS': False,
+}
+# endregion -------------------------------------------------------------------

@@ -28,7 +28,8 @@ class GroupAdmin(admin.ModelAdmin):
 
 @admin.register(replacements.Replacement)
 class ReplacementAdmin(admin.ModelAdmin):
-    list_display = ('id', 'group', 'data', 'break_start', 'break_end', 'break_max_duration')
+    list_display = ('id', 'group', 'data', 'break_start',
+                    'break_end', 'break_max_duration')
     inlines = (ReplacementEmployeeInline,)
 
 
@@ -51,6 +52,7 @@ class BreakAdmin(admin.ModelAdmin):
 @admin.register(dicts.ReplacementStatus)
 class ReplacementStatusAdmin(admin.ModelAdmin):
     list_display = ('code', 'name', 'sort', 'is_active',)
+
 
 @admin.register(dicts.BreakStatus)
 class BreakStatusAdmin(admin.ModelAdmin):
