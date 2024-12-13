@@ -2,17 +2,15 @@ from django.contrib.auth import get_user_model
 from django.db import models
 
 from breaks.models.dicts import ReplacementStatus
-from breaks.models.groups import Group
+from organithations.models.groups import Group
 User = get_user_model()
-
-
 
 
 class Replacement(models.Model):
     group = models.ForeignKey(
         to=Group,
         on_delete=models.CASCADE,
-        related_name = 'replacements',
+        related_name='replacements',
         verbose_name='Group'
     )
     data = models.DateField(verbose_name='Дата смены')

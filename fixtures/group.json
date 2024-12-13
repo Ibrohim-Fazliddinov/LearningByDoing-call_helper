@@ -1,0 +1,1 @@
+[{"model": "organisations.group", "pk": 1, "fields": {"organisation": 1, "name": "IOIO", "manager": 1, "min_active": 1, "break_start": "13:09:19", "break_end": "13:09:20", "break_max_duration": 2, "employees": []}}]

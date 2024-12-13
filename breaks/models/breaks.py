@@ -8,6 +8,7 @@ from breaks.models.replacements import Replacement
 
 User = get_user_model()
 
+
 class Break(models.Model):
     replacement = models.ForeignKey(
         to=Replacement,
@@ -50,11 +51,10 @@ class Break(models.Model):
     class Meta:
         verbose_name = 'Обеденный перерыв'
         verbose_name_plural = 'Обеденный перерывы'
-        ordering = ('-replacement__data','break_start')
+        ordering = ('-replacement__data', 'break_start')
 
     def __str__(self):
         return f'Обед пользователя {self.employee} | {self.pk}'
-
 
     def save(self, *args, **kwargs):
         if not self.pk:

@@ -8,7 +8,8 @@ class BaseDictModelMixin(models.Model):
         primary_key=True
     )
     name = models.CharField(verbose_name='Название', max_length=32)
-    sort = models.PositiveSmallIntegerField(verbose_name='Сортировка', null=True, blank=True)
+    sort = models.PositiveSmallIntegerField(verbose_name='Сортировка',
+                                            null=True, blank=True)
     is_active = models.BooleanField(verbose_name='Активность', default=True)
 
     class Meta:

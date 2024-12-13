@@ -6,16 +6,16 @@ from pathlib import Path
 
 from django.conf.global_settings import AUTH_USER_MODEL, AUTHENTICATION_BACKENDS
 
-root=environ.Path(__file__) - 2 # определение корня проекта
-env = environ.Env() # переменная которая будет хранить значения
-environ.Env.read_env(env.str(root(), '.env'))  # заполнение переменной данными из файла .env
+root = environ.Path(__file__) - 2  # определение корня проекта
+env = environ.Env()  # переменная которая будет хранить значения
+# заполнение переменной данными из файла .env
+environ.Env.read_env(env.str(root(), '.env'))
 BASE_DIR = root()
 
 
 SECRET_KEY = env.str(var='SECRET_KEY')
 DEBUG = env.bool(var='DEBUG', default=False)
-ALLOWED_HOSTS = env.str(var='ALLOWED_HOSTS', default='').split(' ') # ignore
-
+ALLOWED_HOSTS = env.str(var='ALLOWED_HOSTS', default='').split(' ')  # ignore
 
 
 INSTALLED_APPS = [
@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'breaks',
     'users',
+    'organithations',
     'phonenumber_field',
 ]
 
@@ -38,6 +39,7 @@ INSTALLED_APPS += [
     'django_filters',
     'corsheaders',
     'drf_spectacular',
+
 ]
 
 
@@ -74,23 +76,20 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-
-
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': env.str(var='PG_DATABASE', default='postgres'),
+    #     'USER': env.str(var='PG_USER', default='postgres'),
+    #     'PASSWORD': env.str(var='PG_PASSWORD', default='postgres'),
+    #     'HOST': env.str(var='DB_HOST', default='localhost'),
+    #     'PORT': env.int(var='DB_PORT', default=5432),
+    # },
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env.str(var='PG_DATABASE', default='postgres'),
-        'USER': env.str(var='PG_USER', default='postgres'),
-        'PASSWORD': env.str(var='PG_PASSWORD', default='postgres'),
-        'HOST': env.str(var='DB_HOST', default='localhost'),
-        'PORT': env.int(var='DB_PORT', default=5432),
-    },
-    'extra': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -119,23 +118,23 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# region ------------------------- STATIC AND MEDIA ---------------------------------
+# region ------------------------- STATIC AND MEDIA ------------------------
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_TEST_ROOT = os.path.join(BASE_DIR, 'media/test/')
-# endregion -------------------------------------------------------------------------
+# endregion ------------------------------------------------------------------
 
-# region --------------------------- CORS HEADERS -----------------------------------
+# region --------------------------- CORS HEADERS ----------------------------
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = ['*']
 CSRF_COOKIE_SECURE = False
-# endregion -------------------------------------------------------------------------
+# endregion ------------------------------------------------------------------
 
 
-# region ---------------------- REST FRAMEWORK ----------------------------------------------
+# region ---------------------- REST FRAMEWORK --------------------------------
 REST_FRAMEWORK = {
 
     'DEFAULT_PERMISSION_CLASSES': (
@@ -157,10 +156,10 @@ REST_FRAMEWORK = {
 
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
-# endregion -------------------------------------------------------------------------
+# endregion ------------------------------------------------------------------
 
 
-# region ---------------------- SIPMLE JWT & DJOSER -----------------------------------------
+# region ---------------------- SIPMLE JWT & DJOSER --------------------------
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),

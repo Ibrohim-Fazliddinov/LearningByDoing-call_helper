@@ -1,29 +1,20 @@
 from django.contrib import admin
 from django.contrib.admin import TabularInline
-from breaks.models import organisations, groups, replacements, dicts, breaks
+from breaks.models import replacements, dicts, breaks
 from django.urls import reverse
 from django.utils.html import format_html
 
 
-# region ----------------------------------- INLINES -------------------------------------------------
+# region ----------------------------------- INLINES -----------------------
 class ReplacementEmployeeInline(TabularInline):
     model = replacements.ReplacementEmployee
     fields = ('employee', 'status',)
 
 
-# endregion ---------------------------------------------------------------------------------------
+# endregion ------------------------------------------------------------------
 
 
-# region ----------------------------------- MODELS -------------------------------------------------
-
-@admin.register(organisations.Organisation)
-class OrganisationAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'director',)
-
-
-@admin.register(groups.Group)
-class GroupAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'manager', 'min_active',)
+# region ----------------------------------- MODELS --------------------------
 
 
 @admin.register(replacements.Replacement)
@@ -60,4 +51,4 @@ class BreakStatusAdmin(admin.ModelAdmin):
         'code', 'name', 'sort', 'is_active',
     )
 
-# endregion ---------------------------------------------------------------------------------------
+# endregion ------------------------------------------------------------------
