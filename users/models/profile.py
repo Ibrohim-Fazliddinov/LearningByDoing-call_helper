@@ -9,7 +9,8 @@ class Profile(models.Model):
         related_name='profile',
         verbose_name='пользователь'
     )
-    telegram_id = models.CharField(max_length=255, verbose_name='TG ID', blank=True, null=True)
+    telegram_id = models.CharField(
+        max_length=255, verbose_name='TG ID', blank=True, null=True)
 
     class Meta:
         verbose_name = 'Профиль пользователя'

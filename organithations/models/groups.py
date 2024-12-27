@@ -2,11 +2,12 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
 from organithations.models.organisations import Organisation
+from common.models.mixins import InfoMixin
 
 User = get_user_model()
 
 
-class Group(models.Model):
+class Group(InfoMixin):
     organisation = models.ForeignKey(
         to=Organisation,
         on_delete=models.CASCADE,
@@ -26,23 +27,6 @@ class Group(models.Model):
         verbose_name='Сотрудники',
         blank=True,
         through='Member'
-    )
-    min_active = models.PositiveSmallIntegerField(
-        verbose_name='Минимальное кол-во активных сотрудников',
-        null=True, blank=True,
-    )
-    break_start = models.TimeField(
-        verbose_name='Начало обеда',
-        null=True, blank=True
-    )
-    break_end = models.TimeField(
-        verbose_name='Конец обеда',
-        null=True, blank=True
-    )
-
-    break_max_duration = models.PositiveSmallIntegerField(
-        verbose_name='Максимальная длительность обеда',
-        null=True, blank=True
     )
 
     class Meta:
